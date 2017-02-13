@@ -3,10 +3,12 @@ import { Router } from 'express'
 import FoodTruck from '../model/foodtruck'
 import Review from '../model/review'
 
+import { authenticate } from '../middleware/authMiddleware'
+
 export default ({ config, db }) => {
   let api = Router()
 
-  api.post('/add', (req, res) => {
+  api.post('/add', authenticate, (req, res) => {
     let newFoodTruck = new FoodTruck()
     newFoodTruck.name = req.body.name
     newFoodTruck.foodtype = req.body.foodtype
@@ -44,7 +46,7 @@ export default ({ config, db }) => {
       })
   })
 
-  api.put('/:id', (req, res) => {
+  api.put('/:id', authenticate, (req, res) => {
     FoodTruck
       .findById(req.params.id, (err, foodtruck) => {
         if (err) {
@@ -66,7 +68,7 @@ export default ({ config, db }) => {
       })
   })
 
-  api.delete('/:id', (req, res) => {
+  api.delete('/:id', authenticate, (req, res) => {
     FoodTruck
       .remove({ _id: req.params.id }, (err, foodtruck) => {
         if (err) {
@@ -77,7 +79,7 @@ export default ({ config, db }) => {
       })
   })
 
-  api.post('/reviews/add/:id', (req, res) => {
+  api.post('/reviews/add/:id', authenticate, (req, res) => {
     FoodTruck
       .findById(req.params.id, (err, foodtruck) => {
         if (err) {
