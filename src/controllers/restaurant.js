@@ -18,5 +18,27 @@ export default ({ config, db }) => {
     })
   })
 
+  api.get('/', (req, res) => {
+    Restaurant
+      .find({}, (err, restaurants) => {
+        if (err) {
+          res.send(err)
+        }
+
+        res.json(restaurants)
+      })
+  })
+
+  api.get('/:id', (req, res) => {
+    Restaurant
+      .findById(req.params.id, (err, restaurant) => {
+        if (err) {
+          res.send(err)
+        }
+
+        res.json(restaurant)
+      })
+  })
+
   return api
 }
