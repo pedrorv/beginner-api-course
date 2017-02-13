@@ -9,6 +9,10 @@ import routes from './routes'
 let app = express()
 app.server = http.createServer(app)
 
+app.use(bodyParser.json({
+  limit: config.bodyLimit
+}))
+
 app.use('/v1', routes)
 
 app.server.listen(config.port)
