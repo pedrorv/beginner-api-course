@@ -13,7 +13,7 @@ app.use(bodyParser.json({
   limit: config.bodyLimit
 }))
 
-app.use('/v1', routes)
+app.use('/api', routes)
 
 app.server.listen(config.port)
 console.log(`Started on port ${app.server.address().port}`)
